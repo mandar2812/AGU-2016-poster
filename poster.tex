@@ -1,0 +1,386 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% From a template maintained at https://github.com/jamesrobertlloyd/cbl-tikz-poster
+%
+% Code near the top should be fairly standard and not need to be changed
+%  - except for the document class
+% Code lower down is more likely to be customised
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Document class
+%
+% Change this if you want a different size / orientation poster etc
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\documentclass[portrait,a0,final]{a0poster}
+\documentclass[landscape,a0b,final]{a0poster}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% 'Basic' packages
+%
+% TODO - Almost certainly some are unnecessary - feel free to remove nonstandard
+% packages if you think it is a good idea not to always have them
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{shadow}
+\usepackage{morefloats}
+%\usepackage{cite}
+\usepackage[pdftex]{graphicx}
+\usepackage{rotating}
+\usepackage{amsmath, amsthm, amssymb, bm}
+\usepackage{array}
+\usepackage{nth}
+\usepackage[square,numbers]{natbib}
+\usepackage{booktabs}
+\usepackage[table,xcdraw]{xcolor}
+%\usepackage{float}
+%\usepackage{subfig}
+%\usepackage{svg}
+%\usepackage{wrapfig}
+%\usepackage[a0paper,pass]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% TIKZ packages and common definitions
+%
+% Add extra things as per your tikz needs
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{picins}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,arrows,chains,matrix,positioning,scopes,calc}
+\tikzstyle{mybox} = [draw=white, rectangle]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% myfig
+%
+% \myfig - replacement for \figure
+% necessary, since in multicol-environment 
+% \figure won't work        
+%                 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\myfig}[3][0]{
+\begin{center}
+  \vspace{1.5cm}
+  \includegraphics[width=#3\hsize,angle=#1]{#2}
+  \nobreak\medskip
+\end{center}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% mycaption                
+%
+% \mycaption - replacement for \caption
+% necessary, since in multicol-environment \figure and
+% therefore \caption won't work
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\newcounter{figure}
+\setcounter{figure}{1}
+\newcommand{\mycaption}[1]{
+  \vspace{0.5cm}
+  \begin{quote}
+    {{\sc Figure} \arabic{figure}: #1}
+  \end{quote}
+  \vspace{1cm}
+  \stepcounter{figure}
+}
+
+\newcommand{\cwicaption}[1]{
+  %\vspace{0.5cm}
+  \begin{quote}
+    {{\sc Figure} \arabic{figure}: #1}
+  \end{quote}
+  %\vspace{1cm}
+  \stepcounter{figure}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Some standard colours
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{camlightblue}{rgb}{0.601 , 0.8, 1}
+\definecolor{camdarkblue}{rgb}{0, 0.203, 0.402}
+\definecolor{camred}{rgb}{1, 0.203, 0}
+\definecolor{camyellow}{rgb}{1, 0.8, 0}
+\definecolor{lightblue}{rgb}{0, 0, 0.80}
+\definecolor{white}{rgb}{1, 1, 1}
+\definecolor{whiteblue}{rgb}{0.80, 0.80, 1}
+\definecolor{cwired}{rgb}{0.803,0.0,0.227}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Some look and feel definitions
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\columnsep}{0.03\textwidth}
+\setlength{\columnseprule}{0.0018\textwidth}
+\setlength{\parindent}{0.0cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \mysection - replacement for \section*
+% 
+% Puts a pretty box around some text
+% TODO - any other thoughts for what this box should look like
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tikzstyle{mysection} = [rectangle, 
+						draw=none, 
+						shade, 
+						outer color=cwired,
+						inner color=cwired,
+						text width=0.9\columnwidth,
+						text centered,
+						rounded corners=20pt,
+						minimum height=0.11\columnwidth]
+
+\newcommand{\mysection}[1]
+{
+\begin{center}
+  \begin{tikzpicture}
+    \node[mysection,white] {\sffamily\bfseries\LARGE#1};
+  \end{tikzpicture}
+\end{center}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Set the font
+%
+% TODO - Not sure what a canonical choice is - feel free to modify
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\familydefault}{cmss}
+\sffamily
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Poster environment
+%
+% Centres everything and can be used to define the width of the content
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{poster}{
+  \begin{center}
+  \begin{minipage}[c]{0.85\textwidth}
+}{
+  \end{minipage} 
+  \end{center}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This is probably a good place to put content specific packages and definitions
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% The document environment starts here
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Begin the poster environment - centres things and potentially changes the width
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{poster}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Potentially add some space at the top of the poster
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{1\baselineskip}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Draw the header as a TIKZ picture
+%
+% Using TIKZ to allow for easy alignment
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}
+\begin{tikzpicture}[x=0.5\textwidth]
+    % Dummy nodes at edges for spacing
+    % TODO - a better way?
+    \node at (+1, 0) {};    
+    \node at (-1, 0) {};
+    % Set the size of the badges
+    \def \badgeheight {0.08\textwidth}
+    % Title text
+    \node[inner sep=0,text width=0.8\textwidth,text centered,font=\Huge] (Title) at (-0.2,0) 
+    {
+        {\sffamily\veryHuge \textbf{Machine Learning for Space Weather}}\\
+        {\sffamily\Huge Mandar Chandorkar, Enrico Camporeale}\\
+        \vspace{-0.3\baselineskip}
+        {\sffamily\LARGE Multiscale Dynamics, CWI, Amsterdam}\\
+        \vspace{-0.3\baselineskip}
+        {\sffamily\LARGE http://mlspaceweather.org/}
+    };
+    % Cambridge badge
+    \node [mybox] (CWI Logo) at (-1, -0.4) {
+        \includegraphics[height=0.055\textwidth]{cwi-logo.png}
+    };
+    % CBL badge
+    \node [mybox] (Inria logo) at (+0.65, -0.4) {
+        \includegraphics[height=0.07\textwidth]{inria-logo.jpg}
+    };
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Spacing between title and main body
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{2\baselineskip}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Columns environment
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Start of content
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\large
+
+%\mysection{Space Weather}
+
+%\mycaption{Impacts of Space Weather phenomena}
+Space weather is the branch of space physics concerned with the prediction of the  conditions close to Earth (the magnetosphere) driven by the variability of the Sun. 
+\begin{itemize}
+%\item The Sun is the main driver of space weather. Bursts of plasma from the Sun's atmosphere called coronal mass ejections (CME) cause space weather effects here on Earth.
+\item Coronal Mass Ejections (CMEs) can cause Geomagnetic Storms at Earth and induce extra currents in the ground that can affect power grid operations.
+\item Geomagnetic storms can also modify the signal from radio navigation systems (GPS and GNSS) causing degraded accuracy and produce auroras. 
+\end{itemize}
+
+\vspace{\baselineskip}
+
+\begin{tabular}{lr}
+\includegraphics[width=0.48\hsize]{magnetosphere_shifted} &
+%\mycaption{Space Weather Drivers and Dynamics}
+\hspace{9cm}
+\includegraphics[width=0.28\hsize]{nasa-space-weather}\\
+\end{tabular}
+
+\vspace{\baselineskip}
+%\vspace{\baselineskip}
+\begin{multicols}{2}
+
+\mysection{Geomagnetic Activity and Indexes}
+\myfig{dst}{0.75}
+%\mycaption{Dst as a time series, depicting various levels of geomagnetic activity}
+
+Due to the complex nature of geomagnetic response to the solar wind, it is useful to use activity indexes to record and predict the magnetosphere's state. The Dst index is an index of magnetic activity derived from a network of near-equatorial geomagnetic observatories. Hourly records of Dst are available since 1957.
+
+\vspace{\baselineskip}
+\mysection{Gaussian Process Regression}
+
+\myfig{gp}{0.45} 
+%\mycaption{Gaussian Process model fitting with error bars}
+%\vspace{\baselineskip}
+
+\textit{Gaussian Process} (GP) models specify statistical distributions over functions. In GP models, the finite dimensional distribution of the output data is a multivariate Gaussian specified by equation \ref{eq:gp}.
+\vspace{-\baselineskip}
+
+\begin{align}
+& y = f(x) + \epsilon \\
+& f \sim \mathcal{GP}(m(x), C(x,x')) \\
+& \left(\mathbf{y} \ \ \mathbf{f_*} \right)^T \sim 
+\mathcal{N}\left(\mathbf{0}, \left[ \begin{matrix} K(X, X) + \sigma^{2} \it{I} & K(X, X_*) \\ K(X_*, X) & K(X_*, X_*) \end{matrix} \right ] \right) 
+\label{eq:gp}
+\end{align}
+
+In order to make predictions using GP models, one must calculate the posterior predictive distribution $\mathbf{f_*}|X,\mathbf{y},X_*$ which is also a multi-variate Gaussian. % shown in equations \ref{eq:posterior}, \ref{eq:posterior:mean} and \ref{eq:posterior:cov}.
+
+%\begin{align}
+%& \mathbf{f_*}|X,\mathbf{y},X_* \sim \mathcal{N}(\mathbf{\bar{f_*}}, cov(\mathbf{f_*}))  \label{eq:posterior}\\
+%& \mathbf{\bar{f_*}} \overset{\triangle}{=} \mathbb{E}[\mathbf{f_*}|X,y,X_*] = K(X_*,X)[K(X,X) + \sigma^{2}_n \it{I}]^{-1} \mathbf{y} \label{eq:posterior:mean} \\
+%& cov(\mathbf{f_*}) = K(X_*,X_*) - K(X_*,X)[K(X,X) + \sigma^{2}_n \it{I}]^{-1}K(X,X_*) 
+%\label{eq:posterior:cov}
+%\end{align}
+
+\myfig{GP_text}{0.75} 
+%\mycaption{Gaussian Process posterior distribution with two data points}
+
+\mysection{Gaussian Process Dst prediction}
+\begin{align}
+    & Dst(v) \sim \mathcal{GP}(m(v), C(u,v)) \label{eq:DstGP}\\
+    & C_{rbf}(u,v) = \mathbb{E}[Dst(u) \times Dst(v)] =  e^{-\frac{1}{2}|u-v|^2/\sigma^2} \label{eq:rbfcov}\\
+    & C_{fbm}(u,v) = \mathbb{E}[Dst(u) \times Dst(v)] = |u|^{2H} + |v|^{2H} - |u-v|^{2H} \label{eq:fbmcov}
+\end{align}
+
+Using the solar wind speed as a predictive variable, we train a Gaussian Process model to predict the Dst index \ref{eq:DstGP}. We compare the  performance of the \textit{Radial Basis Function} (RBF) kernel versus the \textit{Fractional Brownian Motion} (FBM) kernel (eq. \ref{eq:rbfcov},\ref{eq:fbmcov}). 
+\vspace{\baselineskip}
+
+The figures below show the goodness of fit of the two GP models trained and tested for the years 2007 and 2006 respectively (Left: RBF kernel. Right: FBM kernel)
+
+\vspace{\baselineskip}
+
+\begin{tabular}{ll}
+%\includegraphics[width=0.45\hsize]{rbf-hist}  &
+\includegraphics[width=0.45\hsize]{rbf-fit}   &
+%\includegraphics[width=0.45\hsize]{fbm-hist} & 
+\includegraphics[width=0.45\hsize]{fbm-fit}
+\label{fig:plots}
+\end{tabular}
+
+
+\setlength{\arrayrulewidth}{1mm}
+\setlength{\tabcolsep}{18pt}
+\renewcommand{\arraystretch}{2.5}
+\rowcolors{2}{cwired!45}{cwired!35!}
+\begin{tabular}{ |p{5cm}|p{5cm}|p{5cm}|p{5cm}|p{5cm}|  }
+\hline
+Kernel & Data: Train, Test & MAE & RMSE & $R^2$\\
+\hline
+RBF  & $300$,$1000$ & $1.5044$ & $6.9752$ & $0.7925$ \\
+FBM  & $300$,$1000$ & $0.0312$ & $0.0461$ & $0.9999$ \\
+\hline
+\end{tabular} 
+
+\vspace{\baselineskip}
+Although the RBF based model gives a satisfactory fit, it performs poorly in predicting outlying events like geomagnetic storms ($Dst \leq -100 nT$). the FBM based GP model provides more robust Dst predictions in greatly varying solar wind conditions. 
+
+
+\end{multicols}
+
+\end{poster}
+
+\end{document}
