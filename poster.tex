@@ -17,7 +17,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\documentclass[portrait,a0,final]{a0poster}
-\documentclass[landscape,a0b,final]{a0poster}
+\documentclass[portrait,a0b,final]{a0poster}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -238,7 +238,7 @@
     % Title text
     \node[inner sep=0,text width=0.8\textwidth,text centered,font=\Huge] (Title) at (-0.2,0) 
     {
-        {\sffamily\veryHuge \textbf{Machine Learning for Space Weather}}\\
+        {\sffamily\veryHuge \textbf{Gaussian Process Models for One Hour Ahead Prediction of the Dst Index}}\\
         {\sffamily\Huge Mandar Chandorkar, Enrico Camporeale}\\
         \vspace{-0.3\baselineskip}
         {\sffamily\LARGE Multiscale Dynamics, CWI, Amsterdam}\\
@@ -262,7 +262,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\vspace{2\baselineskip}
+\vspace{\baselineskip}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -280,8 +280,17 @@
 
 \large
 
-%\mysection{Space Weather}
+%\begin{tabular}{lr}
+%\includegraphics[width=0.48\hsize]{magnetosphere_shifted} &
+%\mycaption{Space Weather Drivers and Dynamics}
+%\hspace{9cm}
+%\includegraphics[width=0.28\hsize]{nasa-space-weather}\\
+%\end{tabular}
 
+\begin{multicols}{2}
+
+\mysection{Space Weather}
+\vspace{\baselineskip}
 %\mycaption{Impacts of Space Weather phenomena}
 Space weather is the branch of space physics concerned with the prediction of the  conditions close to Earth (the magnetosphere) driven by the variability of the Sun. 
 \begin{itemize}
@@ -292,16 +301,8 @@ Space weather is the branch of space physics concerned with the prediction of th
 
 \vspace{\baselineskip}
 
-\begin{tabular}{lr}
-\includegraphics[width=0.48\hsize]{magnetosphere_shifted} &
-%\mycaption{Space Weather Drivers and Dynamics}
-\hspace{9cm}
-\includegraphics[width=0.28\hsize]{nasa-space-weather}\\
-\end{tabular}
+\includegraphics[width=\hsize]{magnetosphere_shifted}
 
-\vspace{\baselineskip}
-%\vspace{\baselineskip}
-\begin{multicols}{2}
 
 \mysection{Geomagnetic Activity and Indexes}
 \myfig{dst}{0.75}
