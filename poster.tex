@@ -292,11 +292,11 @@
 \vspace{\baselineskip}
 %\mycaption{Impacts of Space Weather phenomena}
 Space weather is the branch of space physics concerned with the prediction of the  conditions close to Earth (the magnetosphere) driven by the variability of the Sun. 
-\begin{itemize}
+%\begin{itemize}
 %\item The Sun is the main driver of space weather. Bursts of plasma from the Sun's atmosphere called coronal mass ejections (CME) cause space weather effects here on Earth.
-\item Coronal Mass Ejections (CMEs) can cause Geomagnetic Storms at Earth and induce extra currents in the ground that can affect power grid operations.
-\item Geomagnetic storms can also modify the signal from radio navigation systems (GPS and GNSS) causing degraded accuracy and produce auroras. 
-\end{itemize}
+%\item Coronal Mass Ejections (CMEs) can cause Geomagnetic Storms at Earth and induce extra currents in the ground that can affect power grid operations.
+%\item Geomagnetic storms can also modify the signal from radio navigation systems (GPS and GNSS) causing degraded accuracy and produce auroras. 
+%\end{itemize}
 
 \vspace{\baselineskip}
 
@@ -306,9 +306,13 @@ Space weather is the branch of space physics concerned with the prediction of th
 \myfig{dst}{0.75}
 %\mycaption{Dst as a time series, depicting various levels of geomagnetic activity}
 
-Due to the complex nature of geomagnetic response to the solar wind, it is useful to use activity indexes to record and predict the magnetosphere's state. The Dst index is an index of magnetic activity derived from a network of near-equatorial geomagnetic observatories. Hourly records of Dst are available since 1957.
-
+Due to the complex nature of geomagnetic response to the solar wind, it is useful to use activity indexes to record and predict the magnetosphere's state. 
 \vspace{\baselineskip}
+The Dst index is an index of magnetic activity derived from a network of near-equatorial geomagnetic observatories. Hourly records of Dst are available since 1957.
+
+%\vspace{\baselineskip}
+\vfill
+\columnbreak
 \mysection{Gaussian Process Regression}
 
 %\myfig{gp}{0.45} 
@@ -347,20 +351,24 @@ In order to make predictions using GP models, one must calculate the posterior p
 Using the solar wind speed and Inter-planetary magnetic field strength as a predictive variables, we train a Gaussian Process model to predict the Dst index \ref{eq:DstGP}. We compare the performance of Gaussian Process models with the current state of the art in Dst prediction\footnote{Comparison of Dst forecast models for intense geomagnetic storms Ji et. al 2012}. 
 
 \vspace{\baselineskip}
-\setlength{\arrayrulewidth}{1mm}
-\setlength{\tabcolsep}{18pt}
-\renewcommand{\arraystretch}{2.5}
-\rowcolors{2}{cwired!45}{cwired!35!}
-\begin{tabular}{ |p{10cm}|p{10cm}|p{10cm}|  }
-\hline
-Model & RMSE & Correlation Coefficient\\
-\hline
-GP  & $8.9$ & $0.94$ \\
-Persistence  & $14.0$ & $0.91$ \\
-TL & $14.8$ & $0.94$ \\
-NARMAX & $23.4$ & $0.87$ \\
-\hline
-\end{tabular} 
+\includegraphics[width=\hsize]{Compare_RMSE} \label{fig:rmse}
+
+%\setlength{\arrayrulewidth}{1mm}
+%\setlength{\tabcolsep}{18pt}
+%\renewcommand{\arraystretch}{2.5}
+%\rowcolors{2}{cwired!45}{cwired!35!}
+%\begin{tabular}{ |p{10cm}|p{10cm}|p{10cm}|  }
+%\hline
+%Model & RMSE & Correlation Coefficient\\
+%\hline
+%GP  & $8.9$ & $0.94$ \\
+%Persistence  & $14.0$ & $0.91$ \\
+%TL & $14.8$ & $0.94$ \\
+%NARMAX & $23.4$ & $0.87$ \\
+%\hline
+%\end{tabular} 
+
+\includegraphics[width=\hsize]{Compare_RelProb} \label{fig:errorprob}
 
 
 \vspace{\baselineskip}
